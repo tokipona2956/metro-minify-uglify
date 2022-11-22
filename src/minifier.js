@@ -90,8 +90,21 @@ function minifier(options) {
 function minify(_ref) {
   let code = _ref.code,
     map = _ref.map,
-    reserved = _ref.reserved,
+    reserved = _ref.reserved || [],
     config = _ref.config;
+
+  // fix: config.mangle.reserved will be disregard
+  reserved = reserved.concat(reserved, [
+    'Buffer',
+    'BigInteger',
+    'Point',
+    'ECPubKey',
+    'ECKey',
+    'sha512_asm',
+    'asm',
+    'ECPair',
+    'HDNode',
+  ]);
 
   const options = _objectSpread(
     _objectSpread({}, config),
